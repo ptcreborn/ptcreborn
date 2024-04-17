@@ -47,17 +47,17 @@ function getPantryCommunityData(callback) {
         window.alert('Error encountered! ' + err);
     }
 
-    req.open('GET', 'https://getpantry.cloud/apiv1/pantry/8c1037f6-bf4b-443d-9941-a9f9c6a99671/basket/posts', true);
+    req.open('GET', 'https://getpantry.cloud/apiv1/pantry/8c1037f6-bf4b-443d-9941-a9f9c6a99671/basket/posts', false);
     req.setRequestHeader('Content-Type', 'application/json');
     req.send();
 }
 
-function processPantryCommunityData(data) {	
-	temp_pantry_data = data;
+function processPantryCommunityData(data) {
+    temp_pantry_data = data;
 }
 
-function createRecordBlob(data, callback) {	
-	
+function createRecordBlob(data, callback) {
+
     let xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
     xhr.open('POST', 'https://jsonblob.com/api/jsonBlob', false);
@@ -72,6 +72,33 @@ function createRecordBlob(data, callback) {
 }
 
 function successBlobRecord() {
-	temp_blob_id = str.split('location: ')[1];
-	ptcc_setCookie(ptcc_community_cookie_name, temp_blob_id, 120);
+    temp_blob_id = str.split('location: ')[1];
+    ptcc_setCookie(ptcc_community_cookie_name, temp_blob_id, 120);
 }
+
+// MAIN CORE ACCORDING TO FLOW
+
+function loadCommunity() {
+    if (checkIfCommunityCookieExists()) {
+        // Means the cookies is stil available
+        // Get the blob id from the cookie
+        // Load them
+
+        let blob_cookie = ptcc_getCookieName(ptcc_community_cookie_name);
+        if (blob_cookie.includes(';'))
+            blob_cookie = blob_cookie.split(';')[0];
+
+    } else {
+        // Replica the pantry community data
+        // Save to Blob
+        // Create cookie
+        // Go back to loadCommunity function
+
+        getPantryCommunityData(processPantryCommunityData);
+        createRecordBlob(temp_pantry_data, successBlobRecord);
+        loadCommunity();
+    }
+}
+
+
+// Continue tomorrow get the ID of blob
