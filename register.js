@@ -1,6 +1,10 @@
 
 // first create functions
 
+function setP(str) {
+	console.log(str);
+}
+
 var Register = {
     checkIfEmailExists: function (email) {
         // check from Pantry the email address
