@@ -33,6 +33,25 @@ function checkIfPostCookieExists() {
     return (ptcc_getCookieName(ptcc_post_cookie_name));
 }
 
+function getBlobRecord(url, callback) {
+    let req = new XMLHttpRequest();
+
+    req.onload = () => {
+        if (req.readyState == 4)
+            if (req.status == 200)
+                if (callback)
+                    callback(req.response);
+    }
+
+    req.onerror = (err) => {
+        window.alert('Error encountered! ' + err);
+    }
+
+    req.open('GET', url, true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.send();
+}
+
 function getPantryCommunityData(callback) {
     let req = new XMLHttpRequest();
 
@@ -76,6 +95,27 @@ function successBlobRecord() {
     ptcc_setCookie(ptcc_community_cookie_name, temp_blob_id, 120);
 }
 
+function loadCommunityContents(json_data) {
+	// check whether the content exists
+	// display the content or just display to console log
+	
+	let keys = Object.keys(json_data);
+	
+	for(i=0; i<keys.length; i++) {
+		console.log(json_data[keys[i]].content);
+		// Get the content of the blob_id
+		
+		getBlobRecord('https://jsonblob.com/api/jsonBlob/' + blob_cookie, function(data) {
+			data = JSON.parse(data);
+			console.log(data.profImg);
+			console.log(data.username);
+			console.log(data.blobId);
+			console.log(data.content);
+			console.log(data.attchImgs);
+		});
+	}	
+}
+
 // MAIN CORE ACCORDING TO FLOW
 
 function loadCommunity() {
@@ -87,6 +127,10 @@ function loadCommunity() {
         let blob_cookie = ptcc_getCookieName(ptcc_community_cookie_name);
         if (blob_cookie.includes(';'))
             blob_cookie = blob_cookie.split(';')[0];
+		
+		getBlobRecord('https://jsonblob.com/api/jsonBlob/' + blob_cookie, function(data) {
+			
+		});
 
     } else {
         // Replica the pantry community data
@@ -99,6 +143,5 @@ function loadCommunity() {
         loadCommunity();
     }
 }
-
 
 // Continue tomorrow get the ID of blob
