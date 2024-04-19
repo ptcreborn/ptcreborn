@@ -7,10 +7,13 @@ var Register = {
         let exists = false;
         if (Register.validateEmail(email))
             Register.getPantryData('https://getpantry.cloud/apiv1/pantry/8c1037f6-bf4b-443d-9941-a9f9c6a99671/basket/users', function (data) {
+				console.log('validated email.');
+				console.log('pantry data retrieved');
                 data = JSON.parse(data);
                 let keys = Object.keys(data);
                 for (i = 0; i < keys.length; i++) {
                     if (data[keys[i]] == email) {
+						console.log(data[keys[i]]);
 						Register.getBlobRecord('https://jsonblob.com/api/jsonBlob/' + data[keys[i]].blob_id, function(data) {
 							if(data == '404')
 								exists = false;
@@ -34,8 +37,11 @@ var Register = {
                 "background_image": "value",
                 "about_me": "value"
             };*/
+			
+			console.log('email not existing..');
 
             Register.createRecordBlob(blobData, function (data) {
+				console.log('creating blob record');
                 // data is the id of the blob created.
                 // then create a pantryData
                 let pantryData = {
@@ -44,8 +50,7 @@ var Register = {
                     }
                 }
                 Register.createPantryData(pantryData, 'https://getpantry.cloud/apiv1/pantry/8c1037f6-bf4b-443d-9941-a9f9c6a99671/basket/users', function (data) {
-                    // after creating direct to login page.
-
+                    console.log('pantry record created.');
                 });
             });
         } else
@@ -133,3 +138,6 @@ var Register = {
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
     }
 }
+
+
+// To do after create the registration page.
