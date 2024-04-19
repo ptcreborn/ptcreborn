@@ -5,16 +5,17 @@ var Register = {
     checkIfEmailExists: function (email) {
         // check from Pantry the email address
         let exists = false;
-		if(Register.validateEmail(email)) Register.getPantryData('https://getpantry.cloud/apiv1/pantry/8c1037f6-bf4b-443d-9941-a9f9c6a99671/basket/users', function (data) {
-            data = JSON.parse(data);
-            let keys = Object.keys(data);
-            for (i = 0; i < keys.length; i++) {
-                if (data[keys[i]] == email) {
-                    exists = true;
-                    break;
+        if (Register.validateEmail(email))
+            Register.getPantryData('https://getpantry.cloud/apiv1/pantry/8c1037f6-bf4b-443d-9941-a9f9c6a99671/basket/users', function (data) {
+                data = JSON.parse(data);
+                let keys = Object.keys(data);
+                for (i = 0; i < keys.length; i++) {
+                    if (data[keys[i]] == email) {
+                        exists = true;
+                        break;
+                    }
                 }
-            }
-        });
+            });
         return exists;
     },
 
@@ -120,7 +121,7 @@ var Register = {
         req.send(data);
     },
 
-    validateEmail: function(email) {
+    validateEmail: function (email) {
         return String(email)
         .toLowerCase()
         .match(
