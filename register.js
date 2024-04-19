@@ -4,7 +4,11 @@
 var Register = {
     checkIfEmailExists: function (email) {
         // check from Pantry the email address
-        let exists = false;
+		// exists code 
+		// 0 = means not existing
+		// 1 = means existing
+		// 2 = means invalid email address
+        let exists = 0;
         if (Register.validateEmail(email).length > 0) {
 			console.log('validated email.');
             Register.getPantryData('https://getpantry.cloud/apiv1/pantry/8c1037f6-bf4b-443d-9941-a9f9c6a99671/basket/users', function (data) {				
@@ -16,21 +20,23 @@ var Register = {
 						console.log(data[keys[i]]);
 						Register.getBlobRecord('https://jsonblob.com/api/jsonBlob/' + data[keys[i]].blob_id, function(data) {
 							if(data == '404')
-								exists = false;
+								exists = 0;
 							else 
-								exists = true;
+								exists = 1;
 						});
                         break;
                     }
                 }
             });		
-		} else window.alert('Invalid Email Address!');
+		} else 
+			exists = 2;
         return exists;
     },
 
     createAccount: function (email, blobData) {
         // check first if the email exists
-        if (!Register.checkIfEmailExists(email)) {
+		let emailExists = Register.checkIfEmailExists(email);
+        if (emailExists == 0) {
             /* blobData Structure = {
                 "nickname": "value",
                 "joined": "value",
@@ -54,8 +60,10 @@ var Register = {
                     console.log('pantry record created.');
                 });
             });
-        } else
+        } else if (emailExists == 1)
             window.alert('Your email address is existing! Try to login.');
+		else if (emailExists == 2)
+			window.alert('Invalid email address.');
     },
 
     getBlobRecord: function (url, callback) {
