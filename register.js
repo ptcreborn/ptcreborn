@@ -5,7 +5,7 @@ var Register = {
     checkIfEmailExists: function (email) {
         // check from Pantry the email address
         let exists = false;
-        if (Register.validateEmail(email)) {
+        if (Register.validateEmail(email).length > 0) {
 			console.log('validated email.');
             Register.getPantryData('https://getpantry.cloud/apiv1/pantry/8c1037f6-bf4b-443d-9941-a9f9c6a99671/basket/users', function (data) {				
 				console.log('pantry data retrieved');
