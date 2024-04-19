@@ -11,30 +11,35 @@ var Register = {
                 let keys = Object.keys(data);
                 for (i = 0; i < keys.length; i++) {
                     if (data[keys[i]] == email) {
-                        exists = true;
+						Register.getBlobRecord('https://jsonblob.com/api/jsonBlob/' + data[keys[i]].blob_id, function(data) {
+							if(data == '404')
+								exists = false;
+							else 
+								exists = true;
+						});
                         break;
                     }
                 }
-            });
+            });		
         return exists;
     },
 
-    createAccount: function (email) {
+    createAccount: function (email, blobData) {
         // check first if the email exists
         if (!Register.checkIfEmailExists(email)) {
-            let blobData = {
+            /* blobData Structure = {
                 "nickname": "value",
                 "joined": "value",
                 "prof_image": "value",
                 "background_image": "value",
                 "about_me": "value"
-            };
+            };*/
 
             Register.createRecordBlob(blobData, function (data) {
                 // data is the id of the blob created.
                 // then create a pantryData
                 let pantryData = {
-                    "email": {
+                    [email]: {
                         "blob_id": [data]
                     }
                 }
@@ -44,12 +49,8 @@ var Register = {
                 });
             });
         } else
-            window.alert('Your email address is existing!');
+            window.alert('Your email address is existing! Try to login.');
     },
-
-    verifySameEmail: function () {},
-
-    verifySamePassword: function () {},
 
     getBlobRecord: function (url, callback) {
         let req = new XMLHttpRequest();
@@ -59,6 +60,8 @@ var Register = {
                 if (req.status == 200)
                     if (callback)
                         callback(req.response);
+			    else if(req.status == 404)
+					callback('404');
         }
 
         req.onerror = (err) => {
