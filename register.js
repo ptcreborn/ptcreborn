@@ -21,33 +21,35 @@ var Register = {
 
     createAccount: function (email) {
         // check first if the email exists
-        if (!Register.checkIfEmailExists(email)) {}
-        else
-            window.alert('Your email address is not existing!');
+        if (!Register.checkIfEmailExists(email)) {
+            let blobData = {
+                "nickname": "value",
+                "joined": "value",
+                "prof_image": "value",
+                "background_image": "value",
+                "about_me": "value"
+            };
+
+            Register.createRecordBlob(blobData, function (data) {
+                // data is the id of the blob created.
+                // then create a pantryData
+                let pantryData = {
+                    "email": {
+                        "blob_id": [data]
+                    }
+                }
+                Register.createPantryData(pantryData, 'https://getpantry.cloud/apiv1/pantry/8c1037f6-bf4b-443d-9941-a9f9c6a99671/basket/users', function (data) {
+                    // after creating direct to login page.
+
+                });
+            });
+        } else
+            window.alert('Your email address is existing!');
     },
 
     verifySameEmail: function () {},
 
     verifySamePassword: function () {},
-
-    getBlobRecord: function (url, callback) {
-        let req = new XMLHttpRequest();
-
-        req.onload = () => {
-            if (req.readyState == 4)
-                if (req.status == 200)
-                    if (callback)
-                        callback(req.response);
-        }
-
-        req.onerror = (err) => {
-            window.alert('Error encountered! ' + err);
-        }
-
-        req.open('GET', url, true);
-        req.setRequestHeader('Content-Type', 'application/json');
-        req.send();
-    },
 
     getBlobRecord: function (url, callback) {
         let req = new XMLHttpRequest();
@@ -77,7 +79,7 @@ var Register = {
         xhr.setRequestHeader('Accept', 'application/json');
 
         xhr.onload = function () {
-            callback(xhr.getAllResponseHeaders());
+            callback(xhr.getAllResponseHeaders().split('location: ')[1]);
         };
 
         xhr.send(data);
@@ -116,7 +118,7 @@ var Register = {
             window.alert('Error encountered! ' + err);
         }
 
-        req.open('GET', url, false);
+        req.open('PUT', url, false);
         req.setRequestHeader('Content-Type', 'application/json');
         req.send(data);
     },
