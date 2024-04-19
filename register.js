@@ -16,8 +16,8 @@ var Register = {
                 data = JSON.parse(data);
                 let keys = Object.keys(data);
                 for (i = 0; i < keys.length; i++) {
-                    if (data[keys[i]] == email) {
-						console.log(data[keys[i]]);
+                    if (keys[i] == email) {
+						console.log(keys[i]);
 						Register.getBlobRecord('https://jsonblob.com/api/jsonBlob/' + data[keys[i]].blob_id, function(data) {
 							if(data == '404')
 								exists = 0;
@@ -53,7 +53,7 @@ var Register = {
                 // then create a pantryData
                 let pantryData = JSON.stringify({
                     [email]: {
-                        "blob_id": data
+                        "blob_id": data.split('jsonBlob/')[1]
                     }
                 });
                 Register.createPantryData(pantryData, 'https://getpantry.cloud/apiv1/pantry/8c1037f6-bf4b-443d-9941-a9f9c6a99671/basket/users', function (data) {
