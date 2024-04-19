@@ -45,11 +45,11 @@ var Register = {
 				console.log('creating blob record');
                 // data is the id of the blob created.
                 // then create a pantryData
-                let pantryData = {
+                let pantryData = JSON.stringify({
                     [email]: {
                         "blob_id": [data]
                     }
-                }
+                });
                 Register.createPantryData(pantryData, 'https://getpantry.cloud/apiv1/pantry/8c1037f6-bf4b-443d-9941-a9f9c6a99671/basket/users', function (data) {
                     console.log('pantry record created.');
                 });
