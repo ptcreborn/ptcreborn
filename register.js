@@ -61,8 +61,7 @@ var Register = {
                     console.log('pantry record created.');
                     setTimeout(function () {
                         window.location.href = succesRedirectUrl;
-                    }),
-                    1000);
+                    }, 1000);
                 });
             });
         } else if (emailExists == 1) {
