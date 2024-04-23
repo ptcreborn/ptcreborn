@@ -17,7 +17,7 @@ var Register = {
                 let keys = Object.keys(data);
                 for (i = 0; i < keys.length; i++) {
                     if (keys[i] == email) {
-						console.log(keys[i]);
+						console.log(keys[i].blod_id);
 						Register.getBlobRecord('https://jsonblob.com/api/jsonBlob/' + keys[i].blob_id, function(data) {
 							if(data == '404')
 								exists = 0;
