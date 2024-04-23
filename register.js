@@ -1,4 +1,4 @@
-// first create functions
+  // first create functions
 
 var Register = {
     checkIfEmailExists: function (email) {
@@ -15,27 +15,33 @@ var Register = {
                 data = JSON.parse(data);
                 let keys = Object.keys(data);
                 for (i = 0; i < keys.length; i++) {
-                    if (keys[i] != email) {
+                    if (keys[i] == email) {
                         console.log(data[keys[i]].blob_id);
                         Register.getBlobRecord('https://jsonblob.com/api/jsonBlob/' + data[keys[i]].blob_id, function (data) {
-                            if (data == '404')
+                            if (data == '404') {
                                 exists = 0;
-                            else
+                              	console.log('email is not existing...');
+                            }
+                            else {
                                 exists = 1;
+                              	console.log('email is existing...');
+                            }
                         });
+                        i = keys.length;
                         break;
-                    } else
-                        exists = 1;
+                    }
                 }
             });
         } else
             exists = 2;
+      	console.log('done function check email.');
         return exists;
     },
 
     createAccount: function (email, blobData, elem, succesRedirectUrl) {
         // check first if the email exists
         let emailExists = Register.checkIfEmailExists(email);
+      	console.log('done checking emails');
         if (emailExists == 0) {
             /* blobData Structure = {
             "nickname": "value",
@@ -65,11 +71,9 @@ var Register = {
                 });
             });
         } else if (emailExists == 1) {
-            elem.innerText = 'The email address used is already registered, try other email address.';
-            window.alert('Your account is successfully created!');
+            elem.innerText = 'The email address is already registered, try other email address.';
         } else if (emailExists == 2) {
             elem.innerText = 'You have input invalid email address.';
-            window.alert('Invalid email address.');
         }
     },
 
@@ -89,7 +93,7 @@ var Register = {
             window.alert('Error encountered! ' + err);
         }
 
-        req.open('GET', url, true);
+        req.open('GET', url, false);
         req.setRequestHeader('Content-Type', 'application/json');
         req.send();
     },
