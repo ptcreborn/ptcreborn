@@ -1,54 +1,54 @@
-
 // first create functions
 
 var Register = {
     checkIfEmailExists: function (email) {
         // check from Pantry the email address
-		// exists code 
-		// 0 = means not existing
-		// 1 = means existing
-		// 2 = means invalid email address
+        // exists code
+        // 0 = means not existing
+        // 1 = means existing
+        // 2 = means invalid email address
         let exists = 0;
         if (Register.validateEmail(email).length > 0) {
-			console.log('validated email.');
-            Register.getPantryData('https://getpantry.cloud/apiv1/pantry/8c1037f6-bf4b-443d-9941-a9f9c6a99671/basket/users', function (data) {				
-				console.log('pantry data retrieved');
+            console.log('validated email.');
+            Register.getPantryData('https://getpantry.cloud/apiv1/pantry/8c1037f6-bf4b-443d-9941-a9f9c6a99671/basket/users', function (data) {
+                console.log('pantry data retrieved');
                 data = JSON.parse(data);
                 let keys = Object.keys(data);
                 for (i = 0; i < keys.length; i++) {
-                    if (keys[i] == email) {
-						console.log(keys[i].blod_id);
-						Register.getBlobRecord('https://jsonblob.com/api/jsonBlob/' + keys[i].blob_id, function(data) {
-							if(data == '404')
-								exists = 0;
-							else 
-								exists = 1;
-						});
+                    if (keys[i] != email) {
+                        console.log(data[keys[i]].blob_id);
+                        Register.getBlobRecord('https://jsonblob.com/api/jsonBlob/' + data[keys[i]].blob_id, function (data) {
+                            if (data == '404')
+                                exists = 0;
+                            else
+                                exists = 1;
+                        });
                         break;
-                    }
+                    } else
+                        exists = 1;
                 }
-            });		
-		} else 
-			exists = 2;
+            });
+        } else
+            exists = 2;
         return exists;
     },
 
-    createAccount: function (email, blobData) {
+    createAccount: function (email, blobData, elem, succesRedirectUrl) {
         // check first if the email exists
-		let emailExists = Register.checkIfEmailExists(email);
+        let emailExists = Register.checkIfEmailExists(email);
         if (emailExists == 0) {
             /* blobData Structure = {
-                "nickname": "value",
-                "joined": "value",
-                "prof_image": "value",
-                "background_image": "value",
-                "about_me": "value"
+            "nickname": "value",
+            "joined": "value",
+            "prof_image": "value",
+            "background_image": "value",
+            "about_me": "value"
             };*/
-			
-			console.log('email not existing..');
+
+            console.log('email not existing..');
 
             Register.createRecordBlob(blobData, function (data) {
-				console.log('creating blob record');
+                console.log('creating blob record');
                 // data is the id of the blob created.
                 // then create a pantryData
                 let pantryData = JSON.stringify({
@@ -57,13 +57,21 @@ var Register = {
                     }
                 });
                 Register.createPantryData(pantryData, 'https://getpantry.cloud/apiv1/pantry/8c1037f6-bf4b-443d-9941-a9f9c6a99671/basket/users', function (data) {
+                    elem.innerText = 'Your account is successfully created!';
                     console.log('pantry record created.');
+                    setTimeout(function () {
+                        window.location.href = succesRedirectUrl;
+                    }),
+                    1000);
                 });
             });
-        } else if (emailExists == 1)
-            window.alert('Your email address is existing! Try to login.');
-		else if (emailExists == 2)
-			window.alert('Invalid email address.');
+        } else if (emailExists == 1) {
+            elem.innerText = 'The email address used is already registered, try other email address.';
+            window.alert('Your account is successfully created!');
+        } else if (emailExists == 2) {
+            elem.innerText = 'You have input invalid email address.';
+            window.alert('Invalid email address.');
+        }
     },
 
     getBlobRecord: function (url, callback) {
@@ -74,8 +82,8 @@ var Register = {
                 if (req.status == 200)
                     if (callback)
                         callback(req.response);
-			    else if(req.status == 404)
-					callback('404');
+                    else if (req.status == 404)
+                        callback('404');
         }
 
         req.onerror = (err) => {
@@ -96,7 +104,7 @@ var Register = {
         xhr.setRequestHeader('Accept', 'application/json');
 
         xhr.onload = function () {
-			console.log(xhr.getAllResponseHeaders().split('location: ')[1]);
+            console.log(xhr.getAllResponseHeaders().split('location: ')[1]);
             callback(xhr.getAllResponseHeaders().split('location: ')[1]);
         };
 
@@ -148,6 +156,3 @@ var Register = {
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
     }
 }
-
-
-// Email not existing but supposed to be existing!
