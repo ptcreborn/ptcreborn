@@ -5,6 +5,18 @@ var PTC_Cookies = {
         return navigator.cookieEnabled;
     },
 
+    checkIfStorageSupported: function () {
+        return (Storage !== void(0));
+    },
+
+    getLocalStorage: function (name) {
+        return localStorage.getItem(name);
+    },
+
+    storeLocalStorage: function (name, value) {
+        localStorage.setItem(name, value);
+    },
+
     retrieveCookies: function (path) {
         if (PTC_Cookies.getCookieName(path))
             return JSON.parse(PTC_Cookies.getCookieName(path));
