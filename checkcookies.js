@@ -11,10 +11,10 @@ var PTC_Cookies = {
         else
             return null;
     },
-	
-	deleteCookies: function(path) {
-		PTC_Cookies.setCookie(path, '', 1);
-	}
+
+    deleteCookies: function (path) {
+        PTC_Cookies.setCookie(path, '', 1);
+    },
 
     storeCookies: function (path, jsonStr, timeInSec) {
         PTC_Cookies.setCookie(path, jsonStr, timeInSec);
