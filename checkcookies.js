@@ -12,8 +12,8 @@ var PTC_Cookies = {
 			return null;		
     },
 	
-	storeCookies: function(path, jsonStr, timeInMs) {
-		PTC_Cookies.setCookie(path, jsonStr, timeInMs);
+	storeCookies: function(path, jsonStr, timeInSec) {
+		PTC_Cookies.setCookie(path, jsonStr, timeInSec);
 	},
 
     setCookie: function (e, t, l) {
