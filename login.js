@@ -111,8 +111,7 @@ var Login = {
         req.onload = () => {
             if (req.readyState == 4)
                 if (req.status == 200)
-                    if (callback)
-                        callback(req.response);
+                    return callback(req.response);
         }
 
         req.onerror = (err) => {
