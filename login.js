@@ -1,6 +1,8 @@
 // first create functions
 
 var Login = {
+	userBlob: "",
+	
     checkIfEmailExists: function (email) {
         // check from Pantry the email address
         // return the blob_id
@@ -19,6 +21,7 @@ var Login = {
                     if (keys[i] == email) {
                         let blob_id = data[keys[i]].i;
                         Login.getBlobRecord('https://jsonblob.com/api/jsonBlob/' + blob_id, function (data) {
+							Login.userBlob = blob_id;
                             if (data == '404') {
                                 exists[0] = 0;
                                 console.log('email is not existing...');
@@ -42,25 +45,27 @@ var Login = {
     login: function (email, password, elem) {
         // check first if the email exists
         let emailExists = Login.checkIfEmailExists(email);
+		let result = false;
         console.log('done checking emails');
         if (emailExists[0] == 1) {
             Login.getBlobRecord('https://jsonblob.com/api/jsonBlob/' + emailExists[1], function (data) {
                 data = JSON.parse(data);
                 if (password == data.password) {
                     elem.innerText = 'Login successfully!';
-                    return true;
+                    result = true;
                 } else {
-                    return false;
+                    result = false;
                     elem.innerText = 'The password is not correct, please type again!';
                 }
             });
         } else if (emailExists[0] == 0) {
-            return false;
+            result = false;
             elem.innerText = 'The email address is not yet registered. Please create an account.';
         } else if (emailExists[0] == 2) {
-            return false;
+            result = false;
             elem.innerText = 'You have input invalid email address.';
         }
+		return result;
     },
 
     getBlobRecord: function (url, callback) {
