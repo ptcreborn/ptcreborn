@@ -16,6 +16,10 @@ var PTC_Cookies = {
     storeLocalStorage: function (name, value) {
         localStorage.setItem(name, value);
     },
+	
+	deleteStorage(name) {
+		localStorage.removeItem(name);
+	},
 
     retrieveCookies: function (path) {
         if (PTC_Cookies.getCookieName(path))
