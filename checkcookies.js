@@ -10,7 +10,7 @@ var PTC_Cookies = {
     },
 
     getLocalStorage: function (name) {
-        return localStorage.getItem(name);
+        return JSON.parse(localStorage.getItem(name));
     },
 
     storeLocalStorage: function (name, value) {
