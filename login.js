@@ -3,7 +3,7 @@
 var Login = {
     checkIfEmailExists: function (email) {
         // check from Pantry the email address
-		// return the blob_id
+        // return the blob_id
         // exists code
         // 0 = means not existing
         // 1 = means existing
@@ -21,12 +21,11 @@ var Login = {
                         Login.getBlobRecord('https://jsonblob.com/api/jsonBlob/' + blob_id, function (data) {
                             if (data == '404') {
                                 exists[0] = 0;
-                              	console.log('email is not existing...');
-                            }
-                            else {
+                                console.log('email is not existing...');
+                            } else {
                                 exists[0] = 1;
-								exists[1] = blob_id;
-                              	console.log('email is existing...');
+                                exists[1] = blob_id;
+                                console.log('email is existing...');
                             }
                         });
                         i = keys.length;
@@ -40,25 +39,26 @@ var Login = {
         return exists;
     },
 
-    login: function (email, password, elem, succesRedirectUrl) {
+    login: function (email, password, elem) {
         // check first if the email exists
         let emailExists = Login.checkIfEmailExists(email);
         console.log('done checking emails');
         if (emailExists[0] == 1) {
             Login.getBlobRecord('https://jsonblob.com/api/jsonBlob/' + emailExists[1], function (data) {
-				data = JSON.parse(data);
-				if(password == data.password) {
-					elem.innerText = 'Login successfully!';
-					setTimeout(function() {
-						window.location.href = succesRedirectUrl;
-					}, 1000);
-				} else {
-					elem.innerText = 'The password is not correct, please type again!';
-				}
-			});
+                data = JSON.parse(data);
+                if (password == data.password) {
+                    elem.innerText = 'Login successfully!';
+                    return true;
+                } else {
+                    return false;
+                    elem.innerText = 'The password is not correct, please type again!';
+                }
+            });
         } else if (emailExists[0] == 0) {
+            return false;
             elem.innerText = 'The email address is not yet registered. Please create an account.';
         } else if (emailExists[0] == 2) {
+            return false;
             elem.innerText = 'You have input invalid email address.';
         }
     },
