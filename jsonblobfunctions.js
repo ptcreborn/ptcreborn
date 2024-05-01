@@ -58,7 +58,7 @@ var JBLOBFunctions = {
         req.send(JSON.stringify(data));
     },
 	
-	PUTRecordBlob: function (new_data, url, process, callback) {
+	PUTRecordBlob: function (url, process, callback) {
 		JBLOBFunctions.getBlobRecord(url, function(data) {
 			data = JSON.parse(data);
 			new_data = process(data);
