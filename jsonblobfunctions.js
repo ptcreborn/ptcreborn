@@ -36,9 +36,9 @@ var JBLOBFunctions = {
 
         xhr.send(data);
     },
-	
-	updateRecordBlob: function(data, url, callback) {
-		let req = new XMLHttpRequest();
+
+    updateRecordBlob: function (data, url, callback) {
+        let req = new XMLHttpRequest();
 
         req.onload = () => {
             if (req.readyState == 4)
@@ -56,5 +56,5 @@ var JBLOBFunctions = {
         req.open('PUT', url, false);
         req.setRequestHeader('Content-Type', 'application/json');
         req.send(JSON.stringify(data));
-	}
+    }
 }
