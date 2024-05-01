@@ -56,5 +56,13 @@ var JBLOBFunctions = {
         req.open('PUT', url, false);
         req.setRequestHeader('Content-Type', 'application/json');
         req.send(JSON.stringify(data));
-    }
+    },
+	
+	PUTRecordBlob: function (new_data, url, process, callback) {
+		JBLOBFunctions.getBlobRecord(url, function(data) {
+			data = JSON.parse(data);
+			new_data = process(data);
+			JBLOBFunctions.updateRecordBlob(new_data, url, callback);
+		});
+	}
 }
