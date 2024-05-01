@@ -1,0 +1,146 @@
+ .pCrContainer * {
+    margin: 0 !important;
+    padding: 0 !important;
+    
+    color: white;
+  }
+  
+  .pCrContainer {
+    margin: 0 auto !important;
+  }
+  
+  .pCrTtlDesc {
+    /* background: linear-gradient(rgb(65,60,44), rgb(24,23,19)); */
+    background: linear-gradient(rgba(255,255,255, 0.5) 18%, rgba(187,187,187) 30%);
+    
+    /* box-shadow: 
+      0 0 0 2px silver,
+      0 0 0 10px black,
+      0 0 0 10px silver; */
+    
+    border: 5px solid black;
+    border-radius: 15px;
+    
+    margin: .5rem auto !important;
+    padding: 3rem 0rem !important;
+    
+    max-width: 850px;
+    
+    position: relative !important;
+  }
+  
+  .pCrImages {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .pCrTtlDesc textarea, .pCrImages input, .pCrImages button {
+    all: unset;
+  }
+  
+  .pCrContainer select {
+    background: black;
+    
+    outline: none;
+    
+    border: none;
+    border-radius: 15px;
+    
+    padding: 0 1rem !important;
+    
+    font-weight: 900;
+    text-align: center;
+  }
+  
+  .pCrTtlDesc textarea, .pCrTtlDesc input {
+    display: block;
+    
+    width: 90%;
+    
+    outline: none !important;
+    border: 2px inset black !important;
+    
+    resize: none !important;
+    
+    /* background: #00000033 !important; */
+    background: rgb(0, 0, 0, 0.7) !important;
+    
+    margin: 0 auto !important;
+    padding: .5rem !important;
+  }
+  
+  .pCrTtlDesc input {
+    font-size: 24px;
+    padding: 0 10px 0 10px;
+   	width: 100%; 
+  }
+  
+  .pCrTtlDesc textarea::placeholder, .pCrTtlDesc input::placeholder {
+    color: silver;
+  }
+  
+  .pCrTtlDesc textarea:nth-child(2), .pCrTtlDesc input:nth-child(2) {
+    max-height: 2rem;
+  }
+  
+  .pCrTtlDesc textarea:nth-child(4), .pCrTtlDesc input:nth-child(4){
+    min-height: 15rem;
+  }
+  
+  .pCrImages input {
+    display: none;
+  }
+  
+  .pCrImages label, .pCrImages button {
+    /* background: linear-gradient(rgb(254, 194, 0), rgb(191, 138, 24)); */
+    background: linear-gradient(#f57242 35%, #f24f13 100%);
+    
+    border: 5px solid black;
+    border-radius: 15px;
+    
+    padding: .3rem 2rem !important;
+    
+    width: 50%;
+    
+    font-weight: 900;
+    text-align: center;
+    color: rgba(255,255,255,0.9);
+    text-shadow: 1px 1px 0px black;
+  }
+  
+  .pCrTtlDesc img {
+    position: absolute;
+    top: 0;
+    right: 30px;
+    
+    opacity: .5;
+    
+    transform: scalex(-1);
+  }
+  
+  .pCrTtlDesc label, .pCrTtlDesc select, .pCrTtlDesc textarea, .pCrCategory {
+    position: relative;
+    
+    z-index: 1;
+  }
+  
+  .pCrCategory {
+    background: url("https://i.ibb.co/WtXLrwz/superlightnationalwalnuttexture.jpg");
+    
+    display: inline-block;
+    
+    padding: .3rem .6rem .3rem 2rem !important;
+    margin-bottom: 1rem !important;
+    
+    border-radius: 0 20px 20px 0;
+    border: 3px solid black;
+    border-left: none;
+  }
+  
+  .pCrImages label:hover, .pCrImages button:hover {
+    background: linear-gradient(#FFA500dd 35%, #ffc000dd 100%);
+  }
+  
+  .pCrImages label:active, .pCrImages button:active {
+    background: linear-gradient(#ffc000 35%, #FFA500 100%);
+  }
