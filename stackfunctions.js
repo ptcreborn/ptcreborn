@@ -20,7 +20,7 @@ var StackFunctions = {
     },
 
     execute: async function () {
-        if (functions.length > 0) {
+        if (StackFunctions.taskLists.length > 0) {
             //console.log(functions[0]);
 
             let lastTime = 0;
