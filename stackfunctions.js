@@ -1,11 +1,10 @@
 // hello world!
 
 var StackFunctions = {
-
-    functions: [],
+    taskLists: [],
 
     pushTask: function (func) {
-        functions.push(func);
+        StackFunctions.taskLists.push(func);
     },
 
     waitUntil: async function (time, waitingMs) {
