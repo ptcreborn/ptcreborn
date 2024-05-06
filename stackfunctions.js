@@ -30,7 +30,7 @@ var StackFunctions = {
 
             lastTime = parseInt(localStorage.getItem('pantry_used'));
 
-            await waitUntil(lastTime, 2050);
+            await StackFunctions.waitUntil(lastTime, 2050);
 
             functions[0]();
             localStorage.setItem('pantry_used', new Date().getTime());
@@ -40,6 +40,6 @@ var StackFunctions = {
             //console.log(functions);
         }
 
-        setTimeout(execute, 1000);
+        setTimeout(StackFunctions.execute, 1000);
     }
 }
