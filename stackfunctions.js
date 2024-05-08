@@ -21,9 +21,8 @@ var StackFunctions = {
     },
 
     execute: async function () {
-        let functions = StackFunctions.taskLists;
-        if (functions.length > 0) {
-            if (functions[0]) {
+        if (StackFunctions.taskLists.length > 0) {
+            if (StackFunctions.taskLists[0]) {
                 let lastTime = 0;
                 if (!localStorage.getItem('pantry_used'))
                     localStorage.setItem('pantry_used', new Date().getTime());
@@ -32,11 +31,11 @@ var StackFunctions = {
 
                 await StackFunctions.waitUntil(lastTime, 2050);
 
-                functions[0]();
+                StackFunctions.taskLists[0]();
                 localStorage.setItem('pantry_used', new Date().getTime());
 
                 //console.log('popping');
-                functions.shift();
+                StackFunctions.taskLists.shift();
                 //console.log(functions);
             }
         }
