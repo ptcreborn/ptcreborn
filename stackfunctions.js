@@ -4,6 +4,7 @@ var StackFunctions = {
     taskLists: [],
 
     pushTask: function (func) {
+        console.log(func);
         StackFunctions.taskLists.push(func);
     },
 
