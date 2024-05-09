@@ -1,4 +1,4 @@
-// first create functions
+\// first create functions
 
 var Login = {
 	userBlob: "",
@@ -45,24 +45,24 @@ var Login = {
     login: function (email, password, elem) {
         // check first if the email exists
         let emailExists = Login.checkIfEmailExists(email);
-		let result = false;
+	let result = '';
         console.log('done checking emails');
         if (emailExists[0] == 1) {
             Login.getBlobRecord('https://jsonblob.com/api/jsonBlob/' + emailExists[1], function (data) {
                 data = JSON.parse(data);
                 if (password == data.password) {
                     elem.innerText = 'Login successfully!';
-                    result = true;
+                    result = emailExists[1];
                 } else {
-                    result = false;
+                    result = 'false';
                     elem.innerText = 'The password is not correct, please type again!';
                 }
             });
         } else if (emailExists[0] == 0) {
-            result = false;
+            result = 'false';
             elem.innerText = 'The email address is not yet registered. Please create an account.';
         } else if (emailExists[0] == 2) {
-            result = false;
+            result = 'false';
             elem.innerText = 'You have input invalid email address.';
         }
 		return result;
