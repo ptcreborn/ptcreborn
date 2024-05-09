@@ -1,4 +1,4 @@
-\// first create functions
+// first create functions
 
 var Login = {
 	userBlob: "",
