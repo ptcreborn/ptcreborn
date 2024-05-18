@@ -21,6 +21,27 @@ var JBLOBFunctions = {
         req.send();
     },
 
+	getBlobRecord: function (url, callback, isAsync) {
+        let req = new XMLHttpRequest();
+
+        req.onload = () => {
+            if (req.readyState == 4)
+                if (req.status == 200)
+                    if (callback)
+                        callback(req.response);
+                    else if (req.status == 404)
+                        callback('404');
+        }
+
+        req.onerror = (err) => {
+            window.alert('Error encountered! ' + err);
+        }
+
+        req.open('GET', url, isAsync);
+        req.setRequestHeader('Content-Type', 'application/json');
+        req.send();
+    },
+
     createRecordBlob: function (data, callback) {
 
         let xhr = new XMLHttpRequest();
