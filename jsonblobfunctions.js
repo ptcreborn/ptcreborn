@@ -27,13 +27,13 @@ var JBLOBFunctions = {
 
             req.onload = () => {
                 if (req.readyState == 4)
-                    if (req.status == 200)
+                    if (req.status == 200) {
                         if (callback) {
-							resolve("Success!");
+                            resolve("Success!");
                             callback(req.response);
-						}
-                        else if (req.status == 404)
+                        } else if (req.status == 404)
                             callback('404');
+					}
             }
 
             req.onerror = (err) => {
