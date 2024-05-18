@@ -78,7 +78,7 @@ var JBLOBFunctions = {
             window.alert('Error encountered! ' + err);
         }
 
-        req.open('PUT', url, false);
+        req.open('PUT', url, true);
         req.setRequestHeader('Content-Type', 'application/json');
         req.send(JSON.stringify(data));
     },
