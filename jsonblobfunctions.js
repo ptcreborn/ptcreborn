@@ -40,7 +40,7 @@ var JBLOBFunctions = {
                 window.alert('Error encountered! ' + err);
             }
 
-            req.open('GET', url, isAsync);
+            req.open('GET', url, true);
             req.setRequestHeader('Content-Type', 'application/json');
             req.send();
         });
