@@ -21,25 +21,29 @@ var JBLOBFunctions = {
         req.send();
     },
 
-	getBlobRecord: function (url, callback, isAsync) {
-        let req = new XMLHttpRequest();
+    getBlobRecordSync: function (url, callback) {
+        return new Promise(function (resolve, reject) {
+            let req = new XMLHttpRequest();
 
-        req.onload = () => {
-            if (req.readyState == 4)
-                if (req.status == 200)
-                    if (callback)
-                        callback(req.response);
-                    else if (req.status == 404)
-                        callback('404');
-        }
+            req.onload = () => {
+                if (req.readyState == 4)
+                    if (req.status == 200)
+                        if (callback) {
+							resolve("Success!");
+                            callback(req.response);
+						}
+                        else if (req.status == 404)
+                            callback('404');
+            }
 
-        req.onerror = (err) => {
-            window.alert('Error encountered! ' + err);
-        }
+            req.onerror = (err) => {
+                window.alert('Error encountered! ' + err);
+            }
 
-        req.open('GET', url, isAsync);
-        req.setRequestHeader('Content-Type', 'application/json');
-        req.send();
+            req.open('GET', url, isAsync);
+            req.setRequestHeader('Content-Type', 'application/json');
+            req.send();
+        });
     },
 
     createRecordBlob: function (data, callback) {
@@ -78,12 +82,12 @@ var JBLOBFunctions = {
         req.setRequestHeader('Content-Type', 'application/json');
         req.send(JSON.stringify(data));
     },
-	
-	PUTRecordBlob: function (url, process, callback) {
-		JBLOBFunctions.getBlobRecord(url, function(data) {
-			data = JSON.parse(data);
-			new_data = process(data);
-			JBLOBFunctions.updateRecordBlob(new_data, url, callback);
-		});
-	}
+
+    PUTRecordBlob: function (url, process, callback) {
+        JBLOBFunctions.getBlobRecord(url, function (data) {
+            data = JSON.parse(data);
+            new_data = process(data);
+            JBLOBFunctions.updateRecordBlob(new_data, url, callback);
+        });
+    }
 }
