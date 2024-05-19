@@ -12,7 +12,7 @@ var Pantry = {
             window.alert('Error encountered! ' + err);
         }
 
-        req.open('GET', url, false);
+        req.open('GET', url, true);
         req.setRequestHeader('Content-Type', 'application/json');
         req.send();
     },
@@ -31,7 +31,7 @@ var Pantry = {
             window.alert('Error encountered! ' + err);
         }
 
-        req.open('PUT', url, false);
+        req.open('PUT', url, true);
         req.setRequestHeader('Content-Type', 'application/json');
         req.send(data);
     }
