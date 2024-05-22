@@ -56,7 +56,7 @@ var JBLOBFunctions = {
 
         xhr.onload = function () {
             console.log(xhr.getAllResponseHeaders().split('location: ')[1]);
-            callback(xhr.getAllResponseHeaders().split('location: ')[1]);
+            callback(xhr.getAllResponseHeaders().split('location: ')[1].replace('\r', '').replace('\n', ''));
         };
 
         xhr.send(data);
