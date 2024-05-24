@@ -142,9 +142,8 @@ function resetCommentForm(elem) {
 function buildComment() {
     JBLOBFunctions.getBlobRecord(record_api, async function (data) {
         data = JSON.parse(data);
-        let totalLength = data[url].comments.length;
         if (data.hasOwnProperty(url)) {
-            for (i = 0; i < totalLength; i++) {
+            for (i = 0; i < data[url].comments.length; i++) {
                 let comment_id = data[url].comments[i];
                 let temp_data;
                 await JBLOBFunctions.getBlobRecordSync('https://jsonblob.com/api/jsonBlob/' + comment_id, async function (data) {
