@@ -13,7 +13,8 @@ var JBLOBFunctions = {
         }
 
         req.onerror = (err) => {
-            window.alert('Error encountered! ' + err);
+            window.alert('Error encountered!');
+            window.alert(err);
         }
 
         req.open('GET', url, true);
@@ -33,11 +34,12 @@ var JBLOBFunctions = {
                             callback(req.response);
                         } else if (req.status == 404)
                             callback('404');
-					}
+                    }
             }
 
             req.onerror = (err) => {
-                window.alert('Error encountered! ' + err);
+                window.alert('Error encountered!');
+                window.alert(err);
             }
 
             req.open('GET', url, true);
@@ -75,7 +77,8 @@ var JBLOBFunctions = {
         }
 
         req.onerror = (err) => {
-            window.alert('Error encountered! ' + err);
+            window.alert('Error encountered!');
+            window.alert(err);
         }
 
         req.open('PUT', url, true);
