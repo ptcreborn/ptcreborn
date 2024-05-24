@@ -1,0 +1,14 @@
+<div id='comment-container'/>
+<button id='add-comment-btn' onclick='resetCommentForm(this)' style='color: black !important; font-size: 14px !important; width: 100%; display: none;'>ADD COMMENT</button>
+<form action='javascript:createComment()' class='form-comment-post' id='form-ptc-comment' style='pointer-events: none; opacity: 0.5;'>
+  <div class='title-border'>
+  </div>
+  <div class='text-editor'>
+    <span><b>Post a Comment as <span id='current-user' style='text-decoration: underline;'>Guest</span></b></span><br/>
+    <span>Note. To attach image, you need to sign in first.</span>
+    <textarea id='comment-value' onkeyup='textAreaAdjust(this)' required='required'/>
+  <div id='comm_form_attached_images'/>
+  <label for='comm_imgupload1' id='uploadImg'>🖼&#65039; Add Image <input accept='image/png, image/gif, image/jpeg, image/bmp' id='comm_imgupload1' style='display: none;' type='file'/></label>
+  <button id='post_btn' type='submit'>Submit</button>
+  </div>
+</form>
