@@ -5,7 +5,7 @@
   min-height: 100px;
   padding-left: 15px;
   min-height: 70px;
-  border: 1px groove rgb(45,56,68);
+  border: 3px groove orange;
 }
 
 .comment-thread button{
