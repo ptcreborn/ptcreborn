@@ -83,7 +83,6 @@ img.user-profile {
 }
   
 .form-comment-post textarea {
-  all: unset !important;
     resize: horizontal;
     overflow: hidden;
   margin-bottom: 10px;  
