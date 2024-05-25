@@ -65,6 +65,7 @@ function createComment() {
                 "content": comment_value,
               	"userid": userid,
                 "imgs": getAllAttachImages(),
+				"background": userbackimg,
                 "date": new Date().getTime()
             };
         else
@@ -74,6 +75,7 @@ function createComment() {
               	"userid": userid,
                 "content": comment_value,
                 "imgs": getAllAttachImages(),
+				"background": userbackimg,
                 "date": new Date().getTime(),
                 "replies": []
             };
@@ -158,6 +160,7 @@ function buildComment() {
               	let userid = temp_data.userid;
                 let content = temp_data.content.replaceAll('\n', '<br/>');
                 let date = moment(parseInt(temp_data.date)).fromNow();
+				let background = temp_data.background;
                 let reply_build = '';
                 let num_of_replies = (temp_data.replies.length > 0 ? " - about " + temp_data.replies.length + " replies" : "");
 
@@ -174,11 +177,11 @@ function buildComment() {
                         div_imgs.setAttribute('class', 'image-attachments');
                         div_imgs.innerHTML = data.imgs;
 
-                        reply_build += "<div id=" + reply_comment_id + " class='comment-replied'><img class='user-profile' src='" + data.userimg + "'/><a target='_blank' href='"+ data.userid + "'>" + data.username + "</a><span>replied " + moment(parseInt(data.date)).fromNow() + "</span><p>" + data.content.replaceAll('\n', '<br/>') + "</p>" + div_imgs.outerHTML + "</div>";
+                        reply_build += "<div id=" + reply_comment_id + " class='comment-replied' style='backgroundImage: linear-gradient(to bottom, rgb(0,0,0,0.5) 10%, rgb(0,0,0,0.9) 90%), url(\"" + data.background + "\")'><img class='user-profile' src='" + data.userimg + "'/><a target='_blank' href='"+ data.userid + "'>" + data.username + "</a><span>replied " + moment(parseInt(data.date)).fromNow() + "</span><p>" + data.content.replaceAll('\n', '<br/>') + "</p>" + div_imgs.outerHTML + "</div>";
                     });
                 }
 
-                query('comment-container').innerHTML += "<div id=" + comment_id + " class='comment-thread' style='background-image: url(\"" + userbackimg + "\");'><img class='user-profile' src='" + userimg + "'/><a target='_blank' href='" + userid + "'>" + username + "</a><span>commented " + date + " " + num_of_replies + "</span><p>" + content + "</p>" + div_imgs.outerHTML + "" + reply_build + "<div style='position: relative; width: 100%;margin: 10px 0 50px 0;'><button style='font-size: 12px !important; color: black !important;' onclick='addElementToNext(this, query(\"form-ptc-comment\"), \"" + comment_id + "\")'>Add reply</button></div></div>";
+                query('comment-container').innerHTML += "<div id=" + comment_id + " class='comment-thread' style='backgroundImage: linear-gradient(to bottom, rgb(0,0,0,0.5) 10%, rgb(0,0,0,0.9) 90%), url(\"" + background + "\")'><img class='user-profile' src='" + userimg + "'/><a target='_blank' href='" + userid + "'>" + username + "</a><span>commented " + date + " " + num_of_replies + "</span><p>" + content + "</p>" + div_imgs.outerHTML + "" + reply_build + "<div style='position: relative; width: 100%;margin: 10px 0 50px 0;'><button style='font-size: 12px !important; color: black !important;' onclick='addElementToNext(this, query(\"form-ptc-comment\"), \"" + comment_id + "\")'>Add reply</button></div></div>";
             }
         }
     });
