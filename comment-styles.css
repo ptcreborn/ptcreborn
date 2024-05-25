@@ -5,7 +5,11 @@
   min-height: 100px;
   padding-left: 15px;
   min-height: 70px;
-  border: 1px groove red;
+  border-left: 1px groove red;
+  border-right: 1px groove red;
+  outline-top: 1px groove red;
+  outline-bottom: 1px groove red;
+  outline-offset: -10px;
 }
 
 .comment-thread button{
