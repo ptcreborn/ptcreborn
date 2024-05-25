@@ -28,6 +28,7 @@ let replied_to = '';
 let username = 'Guest';
 let userid = 'https://storehaccounts.blogspot.com/p/create-account.html'; 
 let userimg = 'https://i.giphy.com/j5i2tzUmDA2OFeMJVL.webp';
+let userbackimg = 'https://img.freepik.com/premium-vector/banana-pattern-wallpaper_17937-2.jpg';
 
 // check the blob if exists!
 
@@ -177,7 +178,7 @@ function buildComment() {
                     });
                 }
 
-                query('comment-container').innerHTML += "<div id=" + comment_id + " class='comment-thread'><img class='user-profile' src='" + userimg + "'/><a target='_blank' href='" + userid + "'>" + username + "</a><span>commented " + date + " " + num_of_replies + "</span><p>" + content + "</p>" + div_imgs.outerHTML + "" + reply_build + "<div style='position: relative; width: 100%;margin: 10px 0 50px 0;'><button style='font-size: 12px !important; color: black !important;' onclick='addElementToNext(this, query(\"form-ptc-comment\"), \"" + comment_id + "\")'>Add reply</button></div></div>";
+                query('comment-container').innerHTML += "<div id=" + comment_id + " class='comment-thread' style='background-image: url(\"" + userbackimg + "\");'><img class='user-profile' src='" + userimg + "'/><a target='_blank' href='" + userid + "'>" + username + "</a><span>commented " + date + " " + num_of_replies + "</span><p>" + content + "</p>" + div_imgs.outerHTML + "" + reply_build + "<div style='position: relative; width: 100%;margin: 10px 0 50px 0;'><button style='font-size: 12px !important; color: black !important;' onclick='addElementToNext(this, query(\"form-ptc-comment\"), \"" + comment_id + "\")'>Add reply</button></div></div>";
             }
         }
     });
@@ -199,6 +200,7 @@ async function getUserInfos() {
         username = temp_data.nickname;
         userimg = temp_data.prof_image;
       	userid = 'https://storehaccounts.blogspot.com/p/your-account-page.html?' + user.user;
+		userbackimg = temp_data.background_image;
 		
 		query('current-user').innerText = username;
     }
