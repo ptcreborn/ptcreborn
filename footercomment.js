@@ -20,10 +20,10 @@ function query(id) {
     return document.getElementById(id);
 }
 
-// build url
-let url = window.location.href;
+// build comment_footer_url
+let comment_footer_url = window.location.href;
 let record_api = 'https://jsonblob.com/api/jsonBlob/1242732119490158592';
-url = url.split('.html')[0] + '.html';
+comment_footer_url = comment_footer_url.split('.html')[0] + '.html';
 let replied_to = '';
 let username = 'Guest';
 let userid = 'https://storehaccounts.blogspot.com/p/create-account.html';
@@ -87,10 +87,10 @@ function createComment() {
         if (isReply)
             data.replies.push(blob_id);
         else {
-            if (data.hasOwnProperty(url))
-                data[url].comments.push(blob_id);
+            if (data.hasOwnProperty(comment_footer_url))
+                data[comment_footer_url].comments.push(blob_id);
             else
-                data[url] = {
+                data[comment_footer_url] = {
                     "comments": [blob_id]
                 };
         }
@@ -116,9 +116,9 @@ comm_imgupload1.addEventListener("change", ev => {
         method: "post",
         body: formdata
     }).then(data => data.json()).then(data => {
-        let url = data.data.image.url;
+        let defUrl = data.data.image.url;
         let img = document.createElement('img');
-        img.src = url;
+        img.src = defUrl;
         img.style.maxWidth = "150px";
         img.style.margin = '5px';
         query('comm_form_attached_images').appendChild(img);
@@ -146,10 +146,10 @@ function resetCommentForm(elem) {
 function buildComment() {
     JBLOBFunctions.getBlobRecord(record_api, async function (data) {
         data = JSON.parse(data);
-        if (data.hasOwnProperty(url)) {
-            query('comment-count').innerText = data[url].comments.length;
-            for (i = 0; i < data[url].comments.length; i++) {
-                let comment_id = data[url].comments[i];
+        if (data.hasOwnProperty(comment_footer_url)) {
+            query('comment-count').innerText = data[comment_footer_url].comments.length;
+            for (i = 0; i < data[comment_footer_url].comments.length; i++) {
+                let comment_id = data[comment_footer_url].comments[i];
                 let temp_data;
                 await JBLOBFunctions.getBlobRecordSync('https://jsonblob.com/api/jsonBlob/' + comment_id, async function (data) {
                     temp_data = JSON.parse(data);
