@@ -1,3 +1,6 @@
+
+if (!window.location.href.includes('/p/') && query('postBody')) buildCommentHTML();
+
 function textAreaAdjust(element) {
     element.style.height = 'auto';
     element.style.height = (element.scrollHeight) + "px";
