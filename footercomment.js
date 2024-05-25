@@ -102,7 +102,7 @@ function createComment() {
 }
 
 window.addEventListener('load', function () {
-    if (!window.location.href.includes('/p/')) {
+    if (!window.location.href.includes('/p/') && query('postBody')) {
         getUserInfos();
         buildComment();
         disable(query('form-ptc-comment'), false);
