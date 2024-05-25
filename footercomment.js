@@ -1,5 +1,6 @@
-textAreaAdjust(query('comment-value'));
 
+buildCommentHTML();  
+  
 function textAreaAdjust(element) {
     element.style.height = 'auto';
     element.style.height = (element.scrollHeight) + "px";
@@ -143,6 +144,7 @@ function buildComment() {
     JBLOBFunctions.getBlobRecord(record_api, async function (data) {
         data = JSON.parse(data);
         if (data.hasOwnProperty(url)) {
+      		query('comment-count').innerText = data[url].comments.length;
             for (i = 0; i < data[url].comments.length; i++) {
                 let comment_id = data[url].comments[i];
                 let temp_data;
@@ -200,4 +202,10 @@ async function getUserInfos() {
 		
 		query('current-user').innerText = username;
     }
+}
+  
+function buildCommentHTML() {
+  let div = document.createElement('div');
+  div.innerHTML = "<div style='background: red; color: white; padding-left: 10px; font-size: 16px; font-weight: 600;'><span id='comment-count'></span> Comments</div><div id='comment-container'></div><button id='add-comment-btn' style='color: black !important; font-size: 14px !important; width: 100%; display: none;' onclick='resetCommentForm(this)'>ADD COMMENT</button><form id='form-ptc-comment' class='form-comment-post' style='pointer-events: none; opacity: 0.5;' action='javascript:createComment()'><div class='title-border'></div><div class='text-editor'><span><b>Post a Comment as <span id='current-user' style='text-decoration: underline;'>Guest</span></b></span><br><span>Note. To attach image, you need to sign in first.</span><textarea id='comment-value' required onkeyup='textAreaAdjust(this)'></textarea><div id='comm_form_attached_images'></div> <label id='uploadImg' for='comm_imgupload1'>🖼️ Add Image <input style='display: none;' id='comm_imgupload1' accept='image/png, image/gif, image/jpeg, image/bmp' type='file' /></label><button type='submit' id='post_btn'>Submit</button></div></form>";
+  query('postBody').appendChild(div);
 }
