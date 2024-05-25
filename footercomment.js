@@ -102,9 +102,11 @@ function createComment() {
 }
 
 window.addEventListener('load', function () {
-    getUserInfos();
-    buildComment();
-    disable(query('form-ptc-comment'), false);
+    if (!window.location.href.includes('/p/')) {
+        getUserInfos();
+        buildComment();
+        disable(query('form-ptc-comment'), false);
+    }
 }, false);
 
 comm_imgupload1.addEventListener("change", ev => {
