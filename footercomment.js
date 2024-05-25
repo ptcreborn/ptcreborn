@@ -1,6 +1,6 @@
 
-buildCommentHTML();  
-  
+buildCommentHTML();
+
 function textAreaAdjust(element) {
     element.style.height = 'auto';
     element.style.height = (element.scrollHeight) + "px";
@@ -26,7 +26,7 @@ let record_api = 'https://jsonblob.com/api/jsonBlob/1242732119490158592';
 url = url.split('.html')[0] + '.html';
 let replied_to = '';
 let username = 'Guest';
-let userid = 'https://storehaccounts.blogspot.com/p/create-account.html'; 
+let userid = 'https://storehaccounts.blogspot.com/p/create-account.html';
 let userimg = 'https://i.giphy.com/j5i2tzUmDA2OFeMJVL.webp';
 let userbackimg = 'https://img.freepik.com/premium-vector/banana-pattern-wallpaper_17937-2.jpg';
 
@@ -63,19 +63,19 @@ function createComment() {
                 "username": username,
                 "userimg": userimg,
                 "content": comment_value,
-              	"userid": userid,
+                "userid": userid,
                 "imgs": getAllAttachImages(),
-				"background": userbackimg,
+                "background": userbackimg,
                 "date": new Date().getTime()
             };
         else
             comment_data = {
                 "username": username,
                 "userimg": userimg,
-              	"userid": userid,
+                "userid": userid,
                 "content": comment_value,
                 "imgs": getAllAttachImages(),
-				"background": userbackimg,
+                "background": userbackimg,
                 "date": new Date().getTime(),
                 "replies": []
             };
@@ -134,12 +134,12 @@ comm_imgupload1.addEventListener("change", ev => {
 function addElementToNext(thisElement, newElement, id) {
     replied_to = id + '';
     thisElement.parentNode.insertBefore(newElement, thisElement.nextSibling);
-  	query('add-comment-btn').style.display = 'block';
+    query('add-comment-btn').style.display = 'block';
 }
 
 function resetCommentForm(elem) {
     addElementToNext(elem, query('form-ptc-comment'), '');
-  	query('add-comment-btn').style.display = 'none';
+    query('add-comment-btn').style.display = 'none';
 }
 
 // build comments
@@ -147,7 +147,7 @@ function buildComment() {
     JBLOBFunctions.getBlobRecord(record_api, async function (data) {
         data = JSON.parse(data);
         if (data.hasOwnProperty(url)) {
-      		query('comment-count').innerText = data[url].comments.length;
+            query('comment-count').innerText = data[url].comments.length;
             for (i = 0; i < data[url].comments.length; i++) {
                 let comment_id = data[url].comments[i];
                 let temp_data;
@@ -157,10 +157,10 @@ function buildComment() {
 
                 let username = temp_data.username;
                 let userimg = temp_data.userimg;
-              	let userid = temp_data.userid;
+                let userid = temp_data.userid;
                 let content = temp_data.content.replaceAll('\n', '<br/>');
                 let date = moment(parseInt(temp_data.date)).fromNow();
-				let background = temp_data.background;
+                let background = temp_data.background;
                 let reply_build = '';
                 let num_of_replies = (temp_data.replies.length > 0 ? " - about " + temp_data.replies.length + " replies" : "");
 
@@ -177,11 +177,11 @@ function buildComment() {
                         div_imgs.setAttribute('class', 'image-attachments');
                         div_imgs.innerHTML = data.imgs;
 
-                        reply_build += "<div id=" + reply_comment_id + " class='comment-replied' style='backgroundImage: linear-gradient(to bottom, rgb(0,0,0,0.5) 10%, rgb(0,0,0,0.9) 90%), url(\"" + data.background + "\")'><img class='user-profile' src='" + data.userimg + "'/><a target='_blank' href='"+ data.userid + "'>" + data.username + "</a><span>replied " + moment(parseInt(data.date)).fromNow() + "</span><p>" + data.content.replaceAll('\n', '<br/>') + "</p>" + div_imgs.outerHTML + "</div>";
+                        reply_build += "<div id=" + reply_comment_id + " class='comment-replied' style='background-image: linear-gradient(to bottom, rgb(0,0,0,0.5) 10%, rgb(0,0,0,0.9) 90%), url(\"" + data.background + "\")'><img class='user-profile' src='" + data.userimg + "'/><a target='_blank' href='" + data.userid + "'>" + data.username + "</a><span>replied " + moment(parseInt(data.date)).fromNow() + "</span><p>" + data.content.replaceAll('\n', '<br/>') + "</p>" + div_imgs.outerHTML + "</div>";
                     });
                 }
 
-                query('comment-container').innerHTML += "<div id=" + comment_id + " class='comment-thread' style='backgroundImage: linear-gradient(to bottom, rgb(0,0,0,0.5) 10%, rgb(0,0,0,0.9) 90%), url(\"" + background + "\")'><img class='user-profile' src='" + userimg + "'/><a target='_blank' href='" + userid + "'>" + username + "</a><span>commented " + date + " " + num_of_replies + "</span><p>" + content + "</p>" + div_imgs.outerHTML + "" + reply_build + "<div style='position: relative; width: 100%;margin: 10px 0 50px 0;'><button style='font-size: 12px !important; color: black !important;' onclick='addElementToNext(this, query(\"form-ptc-comment\"), \"" + comment_id + "\")'>Add reply</button></div></div>";
+                query('comment-container').innerHTML += "<div id=" + comment_id + " class='comment-thread' style='background-image: linear-gradient(to bottom, rgb(0,0,0,0.5) 10%, rgb(0,0,0,0.9) 90%), url(\"" + background + "\")'><img class='user-profile' src='" + userimg + "'/><a target='_blank' href='" + userid + "'>" + username + "</a><span>commented " + date + " " + num_of_replies + "</span><p>" + content + "</p>" + div_imgs.outerHTML + "" + reply_build + "<div style='position: relative; width: 100%;margin: 10px 0 50px 0;'><button style='font-size: 12px !important; color: black !important;' onclick='addElementToNext(this, query(\"form-ptc-comment\"), \"" + comment_id + "\")'>Add reply</button></div></div>";
             }
         }
     });
@@ -192,25 +192,25 @@ async function getUserInfos() {
     let user = localStorage.getItem('ptc_user');
 
     if (user) {
-        // means logged in.              
+        // means logged in.
         let temp_data;
-      	user = JSON.parse(user);
-      
+        user = JSON.parse(user);
+
         await JBLOBFunctions.getBlobRecordSync('https://jsonblob.com/api/jsonBlob/' + user.user, function (data) {
             temp_data = JSON.parse(data);
         });
 
         username = temp_data.nickname;
         userimg = temp_data.prof_image;
-      	userid = 'https://storehaccounts.blogspot.com/p/your-account-page.html?' + user.user;
-		userbackimg = temp_data.background_image;
-		
-		query('current-user').innerText = username;
+        userid = 'https://storehaccounts.blogspot.com/p/your-account-page.html?' + user.user;
+        userbackimg = temp_data.background_image;
+
+        query('current-user').innerText = username;
     }
 }
-  
+
 function buildCommentHTML() {
-  let div = document.createElement('div');
-  div.innerHTML = "<div style='background: red; color: white; padding-left: 10px; font-size: 16px; font-weight: 600;'><span id='comment-count'></span> Comments</div><div id='comment-container'></div><button id='add-comment-btn' style='color: black !important; font-size: 14px !important; width: 100%; display: none;' onclick='resetCommentForm(this)'>ADD COMMENT</button><form id='form-ptc-comment' class='form-comment-post' style='pointer-events: none; opacity: 0.5;' action='javascript:createComment()'><div class='title-border'></div><div class='text-editor'><span><b>Post a Comment as <span id='current-user' style='text-decoration: underline;'>Guest</span></b></span><br><span>Note. To attach image, you need to sign in first.</span><textarea id='comment-value' required onkeyup='textAreaAdjust(this)'></textarea><div id='comm_form_attached_images'></div> <label id='uploadImg' for='comm_imgupload1'>🖼️ Add Image <input style='display: none;' id='comm_imgupload1' accept='image/png, image/gif, image/jpeg, image/bmp' type='file' /></label><button type='submit' id='post_btn'>Submit</button></div></form>";
-  query('postBody').appendChild(div);
+    let div = document.createElement('div');
+    div.innerHTML = "<div style='background: red; color: white; padding-left: 10px; font-size: 16px; font-weight: 600;'><span id='comment-count'></span> Comments</div><div id='comment-container'></div><button id='add-comment-btn' style='color: black !important; font-size: 14px !important; width: 100%; display: none;' onclick='resetCommentForm(this)'>ADD COMMENT</button><form id='form-ptc-comment' class='form-comment-post' style='pointer-events: none; opacity: 0.5;' action='javascript:createComment()'><div class='title-border'></div><div class='text-editor'><span><b>Post a Comment as <span id='current-user' style='text-decoration: underline;'>Guest</span></b></span><br><span>Note. To attach image, you need to sign in first.</span><textarea id='comment-value' required onkeyup='textAreaAdjust(this)'></textarea><div id='comm_form_attached_images'></div> <label id='uploadImg' for='comm_imgupload1'>🖼️ Add Image <input style='display: none;' id='comm_imgupload1' accept='image/png, image/gif, image/jpeg, image/bmp' type='file' /></label><button type='submit' id='post_btn'>Submit</button></div></form>";
+    query('postBody').appendChild(div);
 }
