@@ -1,5 +1,6 @@
 
-if (!window.location.href.includes('/p/') && query('postBody')) buildCommentHTML();
+if (!window.location.href.includes('/p/') && query('postBody'))
+    buildCommentHTML();
 
 function textAreaAdjust(element) {
     element.style.height = 'auto';
@@ -57,6 +58,13 @@ function createComment() {
         let comment_value = query('comment-value').value;
         let comment_data;
         let blob_id = '';
+		let firebase_data = {
+			[new Date().getTime()]: {
+				"userimg": userimg,
+				"content": comment_value,
+				"link": comment_footer_url
+			}
+		}
 
         if (isReply)
             comment_data = {
@@ -79,6 +87,8 @@ function createComment() {
                 "date": new Date().getTime(),
                 "replies": []
             };
+			
+	    FirebaseModule.patch('https://storehaccounts-comments-default-rtdb.firebaseio.com/comments.json', JSON.stringify(firebase_data));
 
         JBLOBFunctions.createRecordBlob(JSON.stringify(comment_data), function (data) {
             blob_id = data.split('jsonBlob/')[1].replace('\r', '').replace('\n', '');
@@ -191,28 +201,28 @@ function buildCommentHTML() {
     let div = document.createElement('div');
     div.innerHTML = "<div style='margin-top: 20px; background: red; color: white; padding-left: 10px; font-size: 16px; font-weight: 600;'><span style='color: yellow;' id='comment-count'></span> Comments</div><div id='comment-container'></div><button id='add-comment-btn' style='color: black !important; font-size: 14px !important; width: 100%; display: none;' onclick='resetCommentForm(this)'>ADD COMMENT</button><form id='form-ptc-comment' class='form-comment-post' style='pointer-events: none; opacity: 0.5;' action='javascript:createComment()'><div class='title-border'></div><div class='text-editor'><span><b>Post a Comment as <span id='current-user' style='text-decoration: underline;'>Guest</span></b></span><br><textarea id='comment-value' required onkeyup='textAreaAdjust(this)'></textarea><div id='comm_form_attached_images'></div> <label id='uploadImg' for='comm_imgupload1'>🖼️ Add Image <input style='display: none;' id='comm_imgupload1' accept='image/png, image/gif, image/jpeg, image/bmp' type='file' /></label><button type='submit' id='post_btn'>Submit</button></div></form>";
     query('postBody').appendChild(div);
-	
-	comm_imgupload1.addEventListener("change", ev => {
-    query('post_btn').style.pointerEvents = 'none';
-    query('post_btn').innerText = 'Please wait uploading image...';
-    const formdata = new FormData();
-    formdata.append("image", ev.target.files[0])
-    fetch("https://api.imgbb.com/1/upload?key=07f1351d4e674784012d92ae6e03b49d", {
-        method: "post",
-        body: formdata
-    }).then(data => data.json()).then(data => {
-        let defUrl = data.data.image.url;
-        let img = document.createElement('img');
-        img.src = defUrl;
-        img.style.maxWidth = "150px";
-        img.style.margin = '5px';
-        query('comm_form_attached_images').appendChild(img);
-        query('post_btn').style.pointerEvents = 'auto';
-        query('post_btn').innerText = 'Comment';
-    }).catch((data) => {
-        window.alert("Error in uploading! Try uploading again.");
-        query('post_btn').style.pointerEvents = 'auto';
-        query('post_btn').innerText = 'Comment';
+
+    comm_imgupload1.addEventListener("change", ev => {
+        query('post_btn').style.pointerEvents = 'none';
+        query('post_btn').innerText = 'Please wait uploading image...';
+        const formdata = new FormData();
+        formdata.append("image", ev.target.files[0])
+        fetch("https://api.imgbb.com/1/upload?key=07f1351d4e674784012d92ae6e03b49d", {
+            method: "post",
+            body: formdata
+        }).then(data => data.json()).then(data => {
+            let defUrl = data.data.image.url;
+            let img = document.createElement('img');
+            img.src = defUrl;
+            img.style.maxWidth = "150px";
+            img.style.margin = '5px';
+            query('comm_form_attached_images').appendChild(img);
+            query('post_btn').style.pointerEvents = 'auto';
+            query('post_btn').innerText = 'Comment';
+        }).catch((data) => {
+            window.alert("Error in uploading! Try uploading again.");
+            query('post_btn').style.pointerEvents = 'auto';
+            query('post_btn').innerText = 'Comment';
+        });
     });
-});
 }
