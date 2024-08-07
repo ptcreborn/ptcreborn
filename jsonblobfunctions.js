@@ -28,10 +28,13 @@ var JBLOBFunctions = {
 
             req.onload = () => {
                 if (req.readyState == 4)
-                    if (req.status == 200)
+                    if (req.status == 200) {
+                        callback(req.response);
                         resolve(req.response);
+                    }
                     else {
                         console.log(req.response);
+                        callback('undefined');
                         reject('undefined');
                     }
             }
