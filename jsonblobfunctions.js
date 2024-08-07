@@ -10,6 +10,7 @@ var JBLOBFunctions = {
                         callback(req.response);
                     else if (req.status == 404)
                         callback('404');
+                    else callback('undefined');
         }
 
         req.onerror = (err) => {
@@ -29,8 +30,10 @@ var JBLOBFunctions = {
                 if (req.readyState == 4)
                     if (req.status == 200)
                         resolve(req.response);
-                    else
-                        reject(req.statusText);
+                    else {
+                        console.log(req.response);
+                        reject('undefined');
+                    }
             }
 
             req.onerror = (err) => {
