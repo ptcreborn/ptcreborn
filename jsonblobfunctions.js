@@ -19,7 +19,12 @@ var JBLOBFunctions = {
 
         req.open('GET', url, true);
         req.setRequestHeader('Content-Type', 'application/json');
-        req.send();
+        try{
+                req.send();
+            }
+            catch(err){
+                console.log('error: '+ err);
+            }
     },
 
     getBlobRecordSync: function (url, callback) {
@@ -45,7 +50,12 @@ var JBLOBFunctions = {
 
             req.open('GET', url, true);
             req.setRequestHeader('Content-Type', 'application/json');
-            req.send();
+            try{
+                req.send();
+            }
+            catch(err){
+                console.log('error: '+ err);
+            }
         });
     },
 
