@@ -7,10 +7,10 @@ var JBLOBFunctions = {
             if (req.readyState == 4)
                 if (req.status == 200)
                     if (callback)
-                        callback(req.response);
+                        if(callback) callback(req.response);
                     else if (req.status == 404)
-                        callback('404');
-                    else callback('undefined');
+                        if(callback) callback('404');
+                    else if(callback) callback('undefined');
         }
 
         req.onerror = (err) => {
@@ -29,12 +29,12 @@ var JBLOBFunctions = {
             req.onload = () => {
                 if (req.readyState == 4)
                     if (req.status == 200) {
-                        callback(req.response);
+                        if(callback) callback(req.response);
                         resolve(req.response);
                     }
                     else {
                         console.log(req.response);
-                        callback('undefined');
+                        if(callback) callback('undefined');
                         reject('undefined');
                     }
             }
