@@ -5,16 +5,16 @@ var JBLOBFunctions = {
 
         req.onload = () => {
             if (req.readyState == 4)
-                if (req.status == 200)
+                if (req.status == 200) {
                     if (callback)
                         callback(req.response);
-                    else if (req.status == 404) {
-                        if (callback)
-                            callback('404');
-                    } else {
-                        if (callback)
-                            callback('undefined');
-                    }
+                } else if (req.status == 404) {
+                    if (callback)
+                        callback('404');
+                } else {
+                    if (callback)
+                        callback('undefined');
+                }
         }
 
         req.onerror = (err) => {
