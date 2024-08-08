@@ -18,7 +18,7 @@ var JBLOBFunctions = {
         }
 
         req.onerror = (err) => {
-            window.alert(req.statusText);
+            console.log(req.statusText);
         }
 
         req.open('GET', url, true);
@@ -48,7 +48,7 @@ var JBLOBFunctions = {
             }
 
             req.onerror = (err) => {
-                window.alert(req.statusText);
+                console.log(req.statusText);
             }
 
             req.open('GET', url, true);
@@ -90,7 +90,7 @@ var JBLOBFunctions = {
         }
 
         req.onerror = (err) => {
-            window.alert(req.statusText);
+            console.log(req.statusText);
         }
 
         req.open('PUT', url, true);
