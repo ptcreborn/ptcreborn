@@ -7,10 +7,14 @@ var JBLOBFunctions = {
             if (req.readyState == 4)
                 if (req.status == 200)
                     if (callback)
-                        if(callback) callback(req.response);
-                    else if (req.status == 404)
-                        if(callback) callback('404');
-                    else if(callback) callback('undefined');
+                        callback(req.response);
+                    else if (req.status == 404) {
+                        if (callback)
+                            callback('404');
+                    } else {
+                        if (callback)
+                            callback('undefined');
+                    }
         }
 
         req.onerror = (err) => {
@@ -19,12 +23,11 @@ var JBLOBFunctions = {
 
         req.open('GET', url, true);
         req.setRequestHeader('Content-Type', 'application/json');
-        try{
-                req.send();
-            }
-            catch(err){
-                console.log('error: '+ err);
-            }
+        try {
+            req.send();
+        } catch (err) {
+            console.log('error: ' + err);
+        }
     },
 
     getBlobRecordSync: function (url, callback) {
@@ -34,12 +37,12 @@ var JBLOBFunctions = {
             req.onload = () => {
                 if (req.readyState == 4)
                     if (req.status == 200) {
-                        if(callback) callback(req.response);
+                        if (callback)
+                            callback(req.response);
                         resolve(req.response);
-                    }
-                    else {
-                        console.log(req.response);
-                        if(callback) callback('undefined');
+                    } else {
+                        if (callback)
+                            callback('undefined');
                         reject('undefined');
                     }
             }
@@ -50,11 +53,10 @@ var JBLOBFunctions = {
 
             req.open('GET', url, true);
             req.setRequestHeader('Content-Type', 'application/json');
-            try{
+            try {
                 req.send();
-            }
-            catch(err){
-                console.log('error: '+ err);
+            } catch (err) {
+                console.log('error: ' + err);
             }
         });
     },
